@@ -1,7 +1,14 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
 [project]
-name = "python-gen"
+name = "scenario-engine"
 version = "0.1.0"
-description = "Add your description here"
-readme = "README.md"
-requires-python = ">=3.12"
-dependencies = []
+requires-python = ">=3.10"
+
+[tool.setuptools]
+packages = ["scenario_engine"]
+
+[tool.setuptools.package-data]
+scenario_engine = ["**/*.json", "**/*.md"]
