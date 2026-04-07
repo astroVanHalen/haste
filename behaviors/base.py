@@ -1,27 +1,15 @@
 class Behavior:
     """
     Base class for all transaction behavior plugins.
-
     Behaviors DO NOT create transactions.
     Behaviors MUTATE transactions based on context.
     """
 
-    def applies(self, _context) -> bool:
-        """
-        Return True if this behavior should be applied
-        for the given context.
+    def __init__(self, constraints=None):
+        self.constraints = constraints
 
-        Base behavior always applies.
-        Subclasses may override.
-        """
+    def applies(self, context) -> bool:
         return True
 
     def apply(self, txn: dict, context: dict) -> None:
-        """
-        Mutate the transaction in-place based on context.
-
-        This method MUST be implemented by subclasses.
-        """
-        raise NotImplementedError(
-            f"{self.__class__.__name__} must implement apply()"
-        )
+        raise NotImplementedError(f"{self.__class__.__name__} must implement apply()")

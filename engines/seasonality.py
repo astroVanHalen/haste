@@ -10,8 +10,9 @@ SEASONALITY = {
     9: 1.1,
     10: 1.05,
     11: 1.0,
-    12: 0.95
+    12: 0.95,
 }
+
 
 def apply_seasonality(amount, context):
     month = context["date"].month

@@ -4,6 +4,7 @@ from datetime import date
 from scenario_engine.constraints import TransactionConstraints
 from scenario_engine.generator import TransactionGenerator
 
+
 def main():
     parser = argparse.ArgumentParser(
         description="Generate AML training transactions from constraints"
@@ -29,18 +30,17 @@ def main():
         memo_style=tc_data["memo_style"],
         seasonality=tc_data.get("seasonality", "none"),
         risk_signal_intent=tc_data["risk_signal_intent"],
-        seed=tc_data.get("seed", 42)
+        seed=tc_data.get("seed", 42),
     )
 
     generator = TransactionGenerator(constraints)
-    transactions = generator.generate(
-        start_date=date.fromisoformat(args.start_date)
-    )
+    transactions = generator.generate(start_date=date.fromisoformat(args.start_date))
 
     with open(args.output, "w") as f:
         json.dump({"transactions": transactions}, f, indent=2)
 
-    print(f"✅ Generated {len(transactions)} transactions")
+    print(f"Generated {len(transactions)} transactions")
+
 
 if __name__ == "__main__":
     main()
