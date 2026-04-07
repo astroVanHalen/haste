@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AML Training Scenario",
+  "type": "object",
+  "required": [
+    "scenario_id",
+    "difficulty_level",
+    "customer",
+    "accounts",
+    "alert",
+    "transaction_constraints",
+    "analyst_instructions"
+  ],
+  "properties": {
+    "scenario_id": {
+      "type": "string"
+    },
+    "difficulty_level": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "customer": {
+      "type": "object"
+    },
+    "accounts": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "alert": {
+      "type": "object"
+    },
+    "transaction_constraints": {
+      "type": "object",
+      "required": [
+        "time_horizon_days",
+        "avg_txns_per_day",
+        "transaction_types",
+        "amount_range",
+        "velocity_pattern",
+        "counterparty_behavior",
+        "memo_style",
+        "seasonality",
+        "risk_signal_intent"
+      ],
+      "properties": {
+        "time_horizon_days": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "avg_txns_per_day": {
+          "type": "number",
+          "minimum": 0
+        },
+        "transaction_types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "amount_range": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "velocity_pattern": {
+          "type": "string"
+        },
+        "counterparty_behavior": {
+          "type": "string"
+        },
+        "memo_style": {
+          "type": "string"
+        },
+        "seasonality": {
+          "type": "string"
+        },
+        "risk_signal_intent": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "trainer_overrides": {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "integer",
+              "array"
+            ]
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "analyst_instructions": {
+      "type": "object",
+      "required": [
+        "objective",
+        "focus_areas",
+        "expected_outcome"
+      ],
+      "properties": {
+        "objective": {
+          "type": "string"
+        },
+        "focus_areas": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "expected_outcome": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

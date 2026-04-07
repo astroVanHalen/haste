@@ -1,0 +1,31 @@
+  "transaction_constraints": {
+    "time_horizon_days": 0,
+    "avg_txns_per_day": 0.0,
+    "transaction_types": [],
+    "amount_range": [],
+    "velocity_pattern": "",
+    "counterparty_behavior": "",
+    "memo_style": "",
+    "seasonality": "",
+    "risk_signal_intent": ""
+	
+	"trainer_overrides": {
+		"structuring_band_min": 9000,
+		"structuring_band_max": 9850,
+		"max_structuring_occurrences": 2,
+		"min_days_between_structuring": 5,
+	
+		"velocity_ramp_start_day": 15,
+		"velocity_max_daily_txns": 2,
+	
+		"counterparty_pool": [
+		"Local Market",
+		"Food Truck POS",
+		"Event Organizer"
+		],
+	
+		"min_total_txns": 25,
+		"max_total_txns": 50
+	}
+	
+  },
