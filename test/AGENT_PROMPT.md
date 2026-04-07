@@ -15,4 +15,4 @@ If any required field is missing or unknown, FAIL.
 Use neutral, realistic language.
 Avoid words like "structuring", "layering", or "suspicious" as conclusions.
 
-Return one complete JSON object.
+Return one complete JSON object as a downloadable file.
