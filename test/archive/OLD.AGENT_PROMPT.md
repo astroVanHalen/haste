@@ -5,7 +5,7 @@ You are generating AML training scenarios.
 
 RULES:
 - Return JSON ONLY.
-- Follow SCENARIO_AI_CONTRACT.md exactly.
+- Follow SCENARIO_AGENT.md exactly.
 - Do NOT create transactions.
 - Do NOT state conclusions.
 - Do NOT explain your reasoning.

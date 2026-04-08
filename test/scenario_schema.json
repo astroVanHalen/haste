@@ -1,38 +1,117 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "AML Training Scenario",
+  "title": "AML Training Scenario (System-Owned Identity)",
   "type": "object",
+
   "required": [
     "scenario_id",
     "difficulty_level",
-    "customer",
-    "accounts",
+    "primary_risk",
+    "business_profile",
     "alert",
     "transaction_constraints",
     "analyst_instructions"
   ],
+
+  "additionalProperties": false,
+
   "properties": {
     "scenario_id": {
-      "type": "string"
+      "type": "string",
+      "description": "Unique scenario identifier; must match alert.alert_id"
     },
+
     "difficulty_level": {
       "type": "integer",
-      "minimum": 1
+      "enum": [1, 2, 3, 4]
     },
-    "customer": {
-      "type": "object"
+
+    "primary_risk": {
+      "type": "string",
+      "enum": [
+        "cash_structuring",
+        "high_cash_velocity",
+        "inconsistent_revenue",
+        "commingling_funds",
+        "unusual_cash_growth",
+        "geographic_cash_risk"
+      ],
+      "description": "Trainer-selected primary risk category (machine key)"
     },
-    "accounts": {
-      "type": "array",
-      "items": {
-        "type": "object"
+
+    "business_profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "business_type",
+        "customer_structure",
+        "industry_description",
+        "tenure_years"
+      ],
+      "properties": {
+        "business_type": {
+          "type": "string",
+          "description": "High-level business category (e.g., convenience_store)"
+        },
+        "customer_structure": {
+          "type": "string",
+          "description": "Ownership structure (e.g., sole_proprietor, single_member_llc)"
+        },
+        "industry_description": {
+          "type": "string",
+          "description": "Plain-language description of the business operations"
+        },
+        "tenure_years": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Approximate number of years the business has banked with the institution"
+        }
       }
     },
+
     "alert": {
-      "type": "object"
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "alert_id",
+        "alert_date",
+        "review_period"
+      ],
+      "properties": {
+        "alert_id": {
+          "type": "string"
+        },
+        "alert_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "review_period": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["start", "end"],
+          "properties": {
+            "start": {
+              "type": "string",
+              "format": "date"
+            },
+            "end": {
+              "type": "string",
+              "format": "date"
+            }
+          }
+        },
+        "prior_alerts": {
+          "type": "boolean"
+        },
+        "prior_sar": {
+          "type": "boolean"
+        }
+      }
     },
+
     "transaction_constraints": {
       "type": "object",
+      "additionalProperties": false,
       "required": [
         "time_horizon_days",
         "avg_txns_per_day",
@@ -55,32 +134,60 @@
         },
         "transaction_types": {
           "type": "array",
+          "minItems": 1,
           "items": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "P2P Credit",
+              "P2P Debit",
+              "ACH Credit",
+              "ACH Debit",
+              "Cash Deposit",
+              "Cash Withdrawal",
+              "Wire In",
+              "Wire Out",
+              "Check Deposit"
+            ]
           }
         },
         "amount_range": {
           "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
           "items": {
             "type": "number"
-          },
-          "minItems": 2,
-          "maxItems": 2
+          }
         },
         "velocity_pattern": {
-          "type": "string"
+          "type": "string",
+          "enum": [
+            "flat",
+            "gradual_increase",
+            "threshold_avoidant"
+          ]
         },
         "counterparty_behavior": {
-          "type": "string"
+          "type": "string",
+          "enum": [
+            "single_counterparty",
+            "small_recurring_group",
+            "rotating_unrelated"
+          ]
         },
         "memo_style": {
           "type": "string"
         },
         "seasonality": {
-          "type": "string"
+          "type": "string",
+          "enum": [
+            "none",
+            "moderate",
+            "strong"
+          ]
         },
         "risk_signal_intent": {
           "type": "array",
+          "minItems": 1,
           "items": {
             "type": "string"
           }
@@ -88,19 +195,15 @@
         "trainer_overrides": {
           "type": "object",
           "additionalProperties": {
-            "type": [
-              "string",
-              "number",
-              "integer",
-              "array"
-            ]
+            "type": ["string", "number", "integer", "array"]
           }
         }
-      },
-      "additionalProperties": false
+      }
     },
+
     "analyst_instructions": {
       "type": "object",
+      "additionalProperties": false,
       "required": [
         "objective",
         "focus_areas",
@@ -112,6 +215,7 @@
         },
         "focus_areas": {
           "type": "array",
+          "minItems": 1,
           "items": {
             "type": "string"
           }
@@ -121,6 +225,5 @@
         }
       }
     }
-  },
-  "additionalProperties": false
+  }
 }

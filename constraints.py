@@ -5,7 +5,7 @@ It is a formal declaration of behavioral intent, frozen at import time.
 
 from dataclasses import dataclass
 from datetime import date, timedelta
-from typing import List, Tuple, Dict, Any
+from typing import List, Tuple, Dict, Any, Optional
 
 
 @dataclass
@@ -32,9 +32,14 @@ class TransactionConstraints:
     memo_style: str  # e.g. casual_service_like
     seasonality: str  # none, moderate, strong
 
+    # --- Risk classification (scenario-level) ---
+    primary_risk: str  # e.g. "cash_structuring"
+
     # --- Risk intent ---
     risk_signal_intent: List[str]  # e.g. ["undeclared_secondary_income"]
 
+    # --- Trainer overrides (optional fine-tuning) ---
+    trainer_overrides: Optional[Dict[str, Any]] = None
     # --- Reproducibility ---
     seed: int = 42
 

@@ -1,5 +1,5 @@
 
-# SCENARIO_AI_CONTRACT.md
+# SCENARIO_AGENT.md
 
 ## Purpose
 
@@ -37,6 +37,24 @@ The AI must populate:
 - `analyst_instructions`
 
 No other top-level keys are permitted.
+
+---
+
+### Scenario ID Requirements
+
+- Generate a **random Scenario ID** following this exact format:
+  - Starts with the letter **"L"**
+  - Followed immediately by the **training difficulty level**:
+    - Difficulty must be one of: **1, 2, 3, or 4**
+  - Followed by **exactly 6 random numeric digits (0–9)**
+- No separators, spaces, or additional characters
+
+**Format:** `L<Difficulty><6-digit number>`
+
+**Examples:**
+- `L1034821`
+- `L4982764`
+- `L2001459`
 
 ---
 
@@ -84,8 +102,3 @@ They must NOT:
 Invalid output should be regenerated.
 
 ---
-
-## Example Prompt to AI
-
-"Using the SCENARIO_AI_CONTRACT, generate a *medium-difficulty* AML training scenario for a small cash-intensive business. Do not create transactions. Return JSON only."
-
